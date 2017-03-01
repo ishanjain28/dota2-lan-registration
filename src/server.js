@@ -73,7 +73,7 @@ app.get('/payment_status', (req, res) => {
 app.post('/payment_webhook', (req, res) => {
     const db = req.app.locals.db,
         teamsList = db.collection('teamsList'),
-        response = JSON.parse(req.body);
+        response = req.body;
     teamsList.insertOne({
         name: response.buyer_name,
         email: response.email,
