@@ -44,6 +44,8 @@ app.post('/get_request_uri',
     },
     // Create Request URL
     (req, res) => {
+        const db = req.app.locals.db,
+            teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
         data.purpose = "DOTA 2 LAN Gaming Competition"
         data.amount = 100;
@@ -59,6 +61,17 @@ app.post('/get_request_uri',
             if (error) {
                 console.error(error);
             } else if (response.success) {
+                teamsList.insertOne({
+                    required_contact: req.body.contact_required,
+                    optional_contact: req.body.contact_optional || null,
+                    team_name: req.body.team_name,
+                    captain_name: req.body.team_captain,
+                    email: req.body.email,
+                    payment_status: "Pending",
+                    payment_url: response.payment_request.longurl
+                }, (err, result) => {
+                    if (err) throw err;
+                });
                 res.send(JSON.stringify({
                     redirect_url: response.payment_request.longurl,
                     error: 0
@@ -75,11 +88,11 @@ app.post('/payment_webhook', (req, res) => {
     const db = req.app.locals.db,
         teamsList = db.collection('teamsList'),
         response = req.body;
-    teamsList.insertOne({
-        name: response.buyer_name,
-        email: response.buyer,
-        phone_no: response.buyer_phone,
-        status: response.status,
+    teamsList.updateOne({
+        required_contact: response.buyer_phone,
+        team_name: response.buyer_name
+    }, {
+        payment_status: response.status,
         payment_id: response.payment_id,
         payment_request_id: response.payment_request_id,
     }, (err, result) => {
@@ -100,15 +113,16 @@ app.post('/verify_payment', (req, res) => {
     const db = req.app.locals.db,
         teamsList = db.collection('teamsList');
     if (req.body && req.body.payment_id && req.body.payment_request_id) {
-        console.log({
-            payment_id: req.body.payment_id,
-            payment_request_id: req.body.payment_request_id
-        });
+        // console.log({
+        // payment_id: req.body.payment_id,
+        // payment_request_id: req.body.payment_request_id
+        // });
         teamsList.findOne({
             payment_id: req.body.payment_id,
             payment_request_id: req.body.payment_request_id
         }, (err, doc) => {
             if (err) throw err;
+            console.log(doc);
             if (doc) {
                 res.send(JSON.stringify({
                     error: 0,
