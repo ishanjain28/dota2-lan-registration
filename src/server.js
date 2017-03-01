@@ -96,7 +96,8 @@ app.post('/payment_webhook', (req, res) => {
         $set: {
             payment_status: response.status,
             payment_id: response.payment_id,
-            payment_request_id: response.payment_request_id
+            payment_request_id: response.payment_request_id,
+            payment_url: ''
         }
     }, (err, result) => {
         if (err) throw err;
