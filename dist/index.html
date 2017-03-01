@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>DOTA 2 Registration</title>
+
+    <link rel="stylesheet" href="assets/demo.css">
+    <link rel="stylesheet" href="assets/form-basic.css">
+
+</head>
+<header style="margin-bottom: 50px;">
+    <h1>Registration : Dota 2 online</h1>
+</header>
+<div class="main-content">
+
+    <!-- You only need this form and the form-basic.css -->
+
+    <form class="form-basic" id="form-basic">
+        <div class="form-row">
+            <label>
+                    <span>Email</span>
+                    <input type="email" name="email" id="email" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Team Name</span>
+                    <input type="text" name="team_name" id="team_name" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Team Captain Name</span>
+                    <input type="text" name="team_captain_name" id="team_captain_name" required>
+            </label>
+        </div>
+
+        <div class="form-row">
+            <label>
+                    <span>College or Organisation Name</span>
+                    <input type="text" name="organisation_name" id="organisation_name" required/>
+                </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Contact Number</span>
+                    <input type="tel" name="contact_required" id="contact_required" required />
+                </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Contact Number(Optional)</span>
+                    <input type="tel" name="contact_optional" id="contact_optional"/>
+                </label>
+        </div>
+        <div class="form-row">
+            <button type="submit" id="submit-button">Submit Form</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+        document.getElementById('form-basic').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.value = "Please Wait..."
+            submitForm();
+        });
+    }
+
+    function submitForm() {
+        var http = new XMLHttpRequest(),
+            url = "/get_request_uri";
+        var team_name = document.getElementById('team_name').value,
+            team_captain = document.getElementById('team_captain_name').value,
+            email = document.getElementById('email').value,
+            organisation_name = document.getElementById('organisation_name').value,
+            contact_required = document.getElementById('contact_required').value,
+            contact_optional = document.getElementById('contact_optional').value,
+            submitButton = document.getElementById('submit-button');
+        var data =
+            "team_name=" + team_name +
+            "&team_captain=" + team_captain +
+            "&email=" + email +
+            "&organisation_name=" + organisation_name +
+            "&contact_optional=" + contact_optional +
+            "&contact_required=" + contact_required;
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.onreadystatechange = function() {
+            if (http.readyState == 4 && http.status == 200) {
+                var response = JSON.parse(http.responseText);
+                if (!response.error) {
+                    window.location.href = response.redirect_url;
+                }
+            }
+            submitButton.disabled = false;
+            submitButton.value = "Submit";
+        }
+        http.send(data);
+    }
+</script>
+</body>
+
+</html>

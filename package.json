@@ -1,0 +1,33 @@
+{
+    "name": "dota2-manthan",
+    "version": "1.0.0",
+    "description": "Dota 2 Manthan Form",
+    "scripts": {
+        "start": "node src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ishanjain28/dota2-manthan.git"
+    },
+    "keywords": [
+        "Dota2",
+        "Registration",
+        "Form",
+        "Instamojo"
+    ],
+    "author": "Ishan Jain <github.com/ishanjain28>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ishanjain28/dota2-manthan/issues"
+    },
+    "homepage": "https://github.com/ishanjain28/dota2-manthan#readme",
+    "dependencies": {
+        "body-parser": "^1.16.1",
+        "dotenv": "^4.0.0",
+        "eslint": "^3.16.1",
+        "express": "^4.14.1",
+        "instamojo-nodejs": "^0.0.5",
+        "mongodb": "^2.2.24",
+        "request": "^2.79.0"
+    }
+}
