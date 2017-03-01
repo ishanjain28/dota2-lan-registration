@@ -48,7 +48,7 @@ app.post('/get_request_uri',
             teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
         data.purpose = "DOTA 2 LAN Gaming Competition"
-        data.amount = 100;
+        data.amount = 150;
         data.buyer_name = req.body.team_name;
         data.email = req.body.email;
         data.phone = req.body.contact_required;
@@ -63,7 +63,7 @@ app.post('/get_request_uri',
             } else if (response.success) {
                 teamsList.insertOne({
                     required_contact: req.body.contact_required,
-                    optional_contact: req.body.contact_optional || null,
+                    optional_contact: req.body.contact_optional,
                     team_name: req.body.team_name,
                     captain_name: req.body.team_captain,
                     orgranisation_name: req.body.organisation_name,
