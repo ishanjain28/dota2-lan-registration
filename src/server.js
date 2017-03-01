@@ -66,6 +66,7 @@ app.post('/get_request_uri',
                     optional_contact: req.body.contact_optional || null,
                     team_name: req.body.team_name,
                     captain_name: req.body.team_captain,
+                    orgranisation_name: req.body.organisation_name,
                     email: req.body.email,
                     payment_status: "Pending",
                     payment_url: response.payment_request.longurl
@@ -92,9 +93,11 @@ app.post('/payment_webhook', (req, res) => {
         team_name: response.buyer_name,
         email: response.buyer
     }, {
-        payment_status: response.status,
-        payment_id: response.payment_id,
-        payment_request_id: response.payment_request_id,
+        $set: {
+            payment_status: response.status,
+            payment_id: response.payment_id,
+            payment_request_id: response.payment_request_id
+        }
     }, (err, result) => {
         if (err) throw err;
         console.log({
@@ -122,7 +125,7 @@ app.post('/verify_payment', (req, res) => {
             payment_request_id: req.body.payment_request_id
         }, (err, doc) => {
             if (err) throw err;
-            console.log(doc);
+            // console.log(doc);
             if (doc) {
                 res.send(JSON.stringify({
                     error: 0,
