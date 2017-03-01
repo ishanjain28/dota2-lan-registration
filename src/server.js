@@ -63,7 +63,6 @@ app.post('/get_request_uri',
                     redirect_url: response.payment_request.longurl,
                     error: 0
                 }));
-                console.log(response.payment_request.longurl);
             } else {
                 res.status(400).write("Invalid Data");
                 res.end();
