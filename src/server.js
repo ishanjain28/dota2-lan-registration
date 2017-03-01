@@ -50,8 +50,8 @@ app.post('/get_request_uri',
         data.buyer_name = req.body.team_name;
         data.email = req.body.email;
         data.phone = req.body.contact_required;
-        data.send_sms = 'True';
-        data.send_email = 'True';
+        data.send_sms = 'False';
+        data.send_email = 'False';
         data.setRedirectUrl("http://dota2-lan.herokuapp.com/payment_status");
         data.webhook = "http://dota2-lan.herokuapp.com/payment_webhook"
         Insta.createPayment(data, (error, resp) => {
