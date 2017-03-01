@@ -72,9 +72,28 @@ app.get('/payment_status', (req, res) => {
 
 app.post('/payment_webhook', (req, res) => {
     const db = req.app.locals.db,
-        teamsList = db.collection('teamsList');
-
-    console.log(req.body);
+        teamsList = db.collection('teamsList'),
+        response = JSON.parse(res.body);
+    teamsList.insertOne({
+        name: response.buyer_name,
+        email: response.email,
+        phone_no: response.buyer_phone,
+        status: response.status,
+        payment_id: response.payment_id,
+        payment_request_id: response.payment_request_id,
+    }, (err, result) => {
+        if (err) throw err;
+        if (result.nInserted) {
+            console.log({
+                name: response.buyer_name,
+                email: response.email,
+                phone_no: response.buyer_phone,
+                status: response.status,
+                payment_id: response.payment_id,
+                payment_request_id: response.payment_request_id,
+            })
+        }
+    })
 });
 
 app.listen(PORT, (err) => {
