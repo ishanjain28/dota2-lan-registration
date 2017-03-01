@@ -16,13 +16,51 @@
     <h1>Payment Status: Dota 2 online</h1>
 </header>
 <div class="main-content">
-    <div class="payment_status">
+    <div class="payment_status" id="payment_status">
         <span>Checking Payment Status...</span>
     </div>
     <div class="Loader"></div>
 </div>
 <script type="text/javascript">
-    window.onload = function() {}
+    function getQueryObject(url) {
+        var queryStr = (url || window.location.href).split("?")[1],
+            queries = queryStr.split("&"),
+            queryObj = {};
+
+        queries.forEach(function(value) {
+            var key = value.split("=")[0];
+            var keyValue = value.split("=")[1];
+            queryObj[key] = keyValue;
+        });
+        return queryObj;
+    }
+    window.onload = function() {
+        var http = new XMLHttpRequest(),
+            url = "/verify_payment",
+            queryparams = getQueryObject(),
+            payment_id = queryparams.payment_id,
+            payment_request_id = queryparams.payment_request_id,
+            data = "payment_id=" + payment_id + "&payment_request_id=" + payment_request_id,
+            payment_status = document.getElementById('payment_status');
+
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.onreadystatechange = function() {
+            if (http.readyState == 4 && http.status == 200) {
+                var response = JSON.parse(http.responseText);
+                if (!response.error) {
+                    payment_status.innerHTML = '<span>Payment Successful!<br>Payment ID is ' + response.payment_id + ".</span>";
+                } else {
+                    payment_status.innerHTML = '<span>Payment Unsuccessful</span>';
+                }
+            } else if (http.readyState == 4 && http.status == 400) {
+                alert('Invalid Data');
+            }
+            submitButton.disabled = false;
+            submitButton.value = "Submit";
+        }
+        http.send(data);
+    }
 </script>
 </body>
 

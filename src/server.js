@@ -22,6 +22,12 @@ Insta.isSandboxMode(true);
 app.use(bodyParser.urlencoded({ extended: false }));
 // Serve static Files
 app.use(express.static(path.resolve(process.cwd(), 'dist')));
+
+// payment-status page
+app.get('/payment_status', (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), './dist/payment_status.html'));
+});
+
 // Disable X-Powered-By header from requests
 app.disable('x-powered-by');
 
@@ -64,11 +70,7 @@ app.post('/get_request_uri',
                 console.log(response);
             }
         })
-    })
-
-app.get('/payment_status', (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), './dist/payment_status.html'));
-});
+    });
 
 app.post('/payment_webhook', (req, res) => {
     const db = req.app.locals.db,
@@ -76,27 +78,52 @@ app.post('/payment_webhook', (req, res) => {
         response = req.body;
     teamsList.insertOne({
         name: response.buyer_name,
-        email: response.email,
+        email: response.buyer,
         phone_no: response.buyer_phone,
         status: response.status,
         payment_id: response.payment_id,
         payment_request_id: response.payment_request_id,
     }, (err, result) => {
         if (err) throw err;
-        if (result.nInserted) {
-            console.log({
-                name: response.buyer_name,
-                email: response.email,
-                phone_no: response.buyer_phone,
-                status: response.status,
-                payment_id: response.payment_id,
-                payment_request_id: response.payment_request_id,
-            })
-        }
+        console.log({
+            name: response.buyer_name,
+            email: response.buyer,
+            phone_no: response.buyer_phone,
+            status: response.status,
+            payment_id: response.payment_id,
+            payment_request_id: response.payment_request_id,
+        })
     });
     res.end();
 });
 
+app.get('/verify_payment', (req, res) => {
+    const db = req.app.locals.db,
+        teamsList = db.collection('teamsList');
+    if (req.body && req.body.payment_id && req.body.payment_request_id) {
+        teamsList.findOne({
+            payment_id: req.body.payment_id,
+            payment_request_id: req.body.payment_request_id
+        }, (err, doc) => {
+            if (err) throw err;
+            if (doc) {
+                res.send(JSON.stringify({
+                    error: 0,
+                    message: 'Payment Successfull',
+                    payment_id: req.body.payment_id
+                }));
+            } else {
+                res.send(JSON.stringify({
+                    error: 1,
+                    message: 'Payment Unsuccessfull'
+                }));
+            }
+        })
+    } else {
+        res.status(400).write("Invalid Data");
+        res.end();
+    }
+})
 app.listen(PORT, (err) => {
     if (err) throw err;
     process.stdout.write(`Server Started on ${PORT}

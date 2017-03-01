@@ -99,6 +99,8 @@
                 if (!response.error) {
                     window.location.href = response.redirect_url;
                 }
+            } else if (http.readyState == 4 && http.status == 400) {
+                alert('Invalid Data');
             }
             submitButton.disabled = false;
             submitButton.value = "Submit";
