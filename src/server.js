@@ -96,7 +96,7 @@ app.post('/payment_webhook', (req, res) => {
     res.end();
 });
 
-app.get('/verify_payment', (req, res) => {
+app.post('/verify_payment', (req, res) => {
     const db = req.app.locals.db,
         teamsList = db.collection('teamsList');
     if (req.body && req.body.payment_id && req.body.payment_request_id) {

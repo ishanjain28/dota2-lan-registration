@@ -43,7 +43,7 @@
             data = "payment_id=" + payment_id + "&payment_request_id=" + payment_request_id,
             payment_status = document.getElementById('payment_status');
 
-        http.open("GET", url, true);
+        http.open("POST", url, true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.onreadystatechange = function() {
             if (http.readyState == 4 && http.status == 200) {
@@ -56,8 +56,6 @@
             } else if (http.readyState == 4 && http.status == 400) {
                 alert('Invalid Data');
             }
-            submitButton.disabled = false;
-            submitButton.value = "Submit";
         }
         http.send(data);
     }
