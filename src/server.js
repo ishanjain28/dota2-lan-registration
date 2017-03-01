@@ -100,6 +100,10 @@ app.get('/verify_payment', (req, res) => {
     const db = req.app.locals.db,
         teamsList = db.collection('teamsList');
     if (req.body && req.body.payment_id && req.body.payment_request_id) {
+        console.log({
+            payment_id: req.body.payment_id,
+            payment_request_id: req.body.payment_request_id
+        });
         teamsList.findOne({
             payment_id: req.body.payment_id,
             payment_request_id: req.body.payment_request_id
