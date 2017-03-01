@@ -89,8 +89,8 @@ app.post('/payment_webhook', (req, res) => {
         teamsList = db.collection('teamsList'),
         response = req.body;
     teamsList.updateOne({
-        required_contact: response.buyer_phone,
-        team_name: response.buyer_name
+        team_name: response.buyer_name,
+        email: response.buyer
     }, {
         payment_status: response.status,
         payment_id: response.payment_id,
