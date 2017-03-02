@@ -35,7 +35,12 @@ app.disable('x-powered-by');
 app.post('/get_request_uri',
     // Validate Data
     (req, res, next) => {
-        if (req.body && req.body.team_name && req.body.team_captain && req.body.email && req.body.organisation_name && req.body.contact_required) {
+        if (req.body &&
+            req.body.team_name &&
+            req.body.team_captain &&
+            req.body.email &&
+            req.body.organisation_name &&
+            req.body.contact_required) {
             next();
         } else {
             res.status(404).write('Not Found');
@@ -48,7 +53,7 @@ app.post('/get_request_uri',
             teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
         data.purpose = "DOTA 2 LAN Gaming Competition"
-        data.amount = 150;
+        data.amount = 500;
         data.buyer_name = req.body.team_name;
         data.email = req.body.email;
         data.phone = req.body.contact_required;
