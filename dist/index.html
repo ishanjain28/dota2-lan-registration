@@ -48,8 +48,20 @@
         </div>
         <div class="form-row">
             <label>
-                    <span>Player #2</span>
+                    <span>Player #1 Steam ID</span>
+                    <input type="url" name="player_one_link" id="player_one_link" value="https://steamcommunity.com/id/" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #2 </span>
                     <input type="text" name="player_two" id="player_two" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #2 Steam ID</span>
+                    <input type="url" name="player_two_link" id="player_two_link" value="https://steamcommunity.com/id/" required>
             </label>
         </div>
         <div class="form-row">
@@ -60,8 +72,20 @@
         </div>
         <div class="form-row">
             <label>
+                    <span>Player #3 Steam ID</span>
+                    <input type="text" name="player_three_link" id="player_three_link" value="https://steamcommunity.com/id/" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
                     <span>Player #4</span>
                     <input type="text" name="player_four" id="player_four" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #4 Steam ID</span>
+                    <input type="text" name="player_four_link" id="player_four_link" value="https://steamcommunity.com/id/" required>
             </label>
         </div>
         <div class="form-row">
@@ -72,15 +96,45 @@
         </div>
         <div class="form-row">
             <label>
+                    <span>Player #5 Steam ID</span>
+                    <input type="text" name="player_five_link" id="player_five_link" value="https://steamcommunity.com/id/" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Optional Player #1</span>
+                    <input type="text" name="optional_player_one" id="optional_player_one" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Optional Player #1 Steam ID</span>
+                    <input type="text" name="optional_player_one_link" id="optional_player_one_link" value="https://steamcommunity.com/id/" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Optional Player #2</span>
+                    <input type="text" name="optional_player_two" id="optional_player_two" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Optional Player #2 Steam ID</span>
+                    <input type="text" name="optional_player_two_link" id="optional_player_two_link" value="https://steamcommunity.com/id/" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
                     <span>College or Organisation Name</span>
                     <input type="text" name="organisation_name" id="organisation_name" required/>
                 </label>
         </div>
         <div class="form-row">
             <label>
-                    <span>Contact Number</span>
-                    <input type="tel" name="contact_required" id="contact_required" required />
-                </label>
+                <span>Contact Number</span>
+                <input type="tel" name="contact_required" id="contact_required" required />
+            </label>
         </div>
         <div class="form-row">
             <label>
@@ -110,10 +164,19 @@
         var team_name = document.getElementById('team_name').value,
             team_captain = document.getElementById('team_captain_name').value,
             player_one = document.getElementById('player_one').value,
+            player_one_link = document.getElementById('player_one_link').value,
             player_two = document.getElementById('player_two').value,
+            player_two_link = document.getElementById('player_two_link').value,
             player_three = document.getElementById('player_three').value,
+            player_three_link = document.getElementById('player_three_link').value,
             player_four = document.getElementById('player_four').value,
+            player_four_link = document.getElementById('player_four_link').value,
             player_five = document.getElementById('player_five').value,
+            player_five_link = document.getElementById('player_five_link').value,
+            optional_player_one = document.getElementById('optional_player_one').value,
+            optional_player_one_link = document.getElementById('optional_player_one_link').value,
+            optional_player_one = document.getElementById('optional_player_two').value,
+            optional_player_two_link = document.getElementById('optional_player_two_link').value,
             email = document.getElementById('email').value,
             organisation_name = document.getElementById('organisation_name').value,
             contact_required = document.getElementById('contact_required').value,
@@ -123,10 +186,19 @@
             "team_name=" + team_name +
             "&team_captain=" + team_captain +
             "&player_one=" + player_one +
+            "&player_one_link=" + player_one_link +
             "&player_two=" + player_two +
+            "&player_two_link=" + player_two_link +
             "&player_three=" + player_three +
+            "&player_three_link=" + player_three_link +
             "&player_four=" + player_four +
+            "&player_four_link=" + player_four_link +
             "&player_five=" + player_five +
+            "&player_five_link=" + player_five_link +
+            "&optional_player_one=" + optional_player_one +
+            "&optional_player_one_link=" + optional_player_one_link +
+            "&optional_player_two=" + optional_player_two +
+            "&optional_player_two_link=" + optional_player_two_link +
             "&email=" + email +
             "&organisation_name=" + organisation_name +
             "&contact_optional=" + contact_optional +

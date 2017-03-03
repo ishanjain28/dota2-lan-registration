@@ -39,15 +39,25 @@ app.post('/get_request_uri',
             req.body.team_name &&
             req.body.team_captain &&
             req.body.player_one &&
+            req.body.player_one_link &&
             req.body.player_two &&
+            req.body.player_two_link &&
             req.body.player_three &&
+            req.body.player_three_link &&
             req.body.player_four &&
+            req.body.player_four_link &&
             req.body.player_five &&
+            req.body.player_five_link &&
+            req.body.optional_player_one &&
+            req.body.optional_player_one_link &&
+            req.body.optional_player_two &&
+            req.body.optional_player_two_link &&
             req.body.email &&
             req.body.organisation_name &&
             req.body.contact_required) {
             next();
         } else {
+            console.log(req.body)
             res.status(404).write('Not Found');
             res.end();
         }
@@ -58,7 +68,7 @@ app.post('/get_request_uri',
             teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
         data.purpose = "DOTA 2 LAN Gaming Competition"
-        data.amount = 500;
+        data.amount = 513;
         data.buyer_name = req.body.team_name;
         data.email = req.body.email;
         data.phone = req.body.contact_required;
@@ -76,11 +86,36 @@ app.post('/get_request_uri',
                     optional_contact: req.body.contact_optional,
                     team_name: req.body.team_name,
                     captain_name: req.body.team_captain,
-                    player_one: req.body.player_one,
-                    player_two: req.body.player_two,
-                    player_three: req.body.player_three,
-                    player_four: req.body.player_four,
-                    player_five: req.body.player_five,
+                    players: {
+                        player_one: {
+                            name: req.body.player_one,
+                            link: req.body.player_one_link
+                        },
+                        player_two: {
+                            name: req.body.player_two,
+                            link: req.body.player_two_link
+                        },
+                        player_three: {
+                            name: req.body.player_three,
+                            link: req.body.player_three_link
+                        },
+                        player_four: {
+                            name: req.body.player_four,
+                            link: req.body.player_four_link
+                        },
+                        player_five: {
+                            name: req.body.player_five,
+                            link: req.body.player_five_link,
+                        },
+                        optional_player_one: {
+                            name: req.body.optional_player_one,
+                            link: req.body.optional_player_one_link,
+                        },
+                        optional_player_two: {
+                            name: req.body.optional_player_two,
+                            link: req.body.optional_player_two_link,
+                        }
+                    },
                     organisation_name: req.body.organisation_name,
                     email: req.body.email,
                     payment_status: "Pending",
