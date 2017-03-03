@@ -71,7 +71,7 @@ app.post('/get_request_uri',
             teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
 
-        let team_name = req.body.team_name.split(" ").join("");
+        let team_name = req.body.team_name;
         data.purpose = "DOTA 2 LAN Gaming Competition"
         data.amount = 513;
         data.buyer_name = team_name;
