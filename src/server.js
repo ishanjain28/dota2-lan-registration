@@ -27,7 +27,10 @@ app.use(express.static(path.resolve(process.cwd(), 'dist')));
 app.get('/payment_status', (req, res) => {
     res.sendFile(path.resolve(process.cwd(), './dist/payment_status.html'));
 });
-
+// Registrations Page
+app.get('/register_log', (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), './dist/registrations.html'));
+});
 // Disable X-Powered-By header from requests
 app.disable('x-powered-by');
 
@@ -77,62 +80,65 @@ app.post('/get_request_uri',
         data.setRedirectUrl("http://dota2-lan.herokuapp.com/payment_status");
         data.webhook = "http://dota2-lan.herokuapp.com/payment_webhook"
         Insta.createPayment(data, (error, resp) => {
-            let response = JSON.parse(resp);
             if (error) {
                 console.error(error);
-            } else if (response.success) {
-                teamsList.insertOne({
-                    required_contact: req.body.contact_required,
-                    optional_contact: req.body.contact_optional,
-                    team_name: req.body.team_name,
-                    captain_name: req.body.team_captain,
-                    players: {
-                        player_one: {
-                            name: req.body.player_one,
-                            link: req.body.player_one_link
-                        },
-                        player_two: {
-                            name: req.body.player_two,
-                            link: req.body.player_two_link
-                        },
-                        player_three: {
-                            name: req.body.player_three,
-                            link: req.body.player_three_link
-                        },
-                        player_four: {
-                            name: req.body.player_four,
-                            link: req.body.player_four_link
-                        },
-                        player_five: {
-                            name: req.body.player_five,
-                            link: req.body.player_five_link,
-                        },
-                        optional_player_one: {
-                            name: req.body.optional_player_one,
-                            link: req.body.optional_player_one_link,
-                        },
-                        optional_player_two: {
-                            name: req.body.optional_player_two,
-                            link: req.body.optional_player_two_link,
-                        }
-                    },
-                    organisation_name: req.body.organisation_name,
-                    email: req.body.email,
-                    payment_status: "Pending",
-                    payment_url: response.payment_request.longurl
-                }, (err, result) => {
-                    if (err) throw err;
-                });
-                res.send(JSON.stringify({
-                    redirect_url: response.payment_request.longurl,
-                    error: 0
-                }));
             } else {
-                res.status(400).write("Invalid Data");
-                res.end();
-                console.log(response);
+                let response = JSON.parse(resp);
+                if (response.success) {
+                    teamsList.insertOne({
+                        required_contact: req.body.contact_required,
+                        optional_contact: req.body.contact_optional,
+                        team_name: req.body.team_name,
+                        captain_name: req.body.team_captain,
+                        players: {
+                            1: {
+                                name: req.body.player_one,
+                                link: req.body.player_one_link
+                            },
+                            2: {
+                                name: req.body.player_two,
+                                link: req.body.player_two_link
+                            },
+                            3: {
+                                name: req.body.player_three,
+                                link: req.body.player_three_link
+                            },
+                            4: {
+                                name: req.body.player_four,
+                                link: req.body.player_four_link
+                            },
+                            5: {
+                                name: req.body.player_five,
+                                link: req.body.player_five_link,
+                            },
+                            6: {
+                                name: req.body.optional_player_one,
+                                link: req.body.optional_player_one_link,
+                            },
+                            7: {
+                                name: req.body.optional_player_two,
+                                link: req.body.optional_player_two_link,
+                            }
+                        },
+                        organisation_name: req.body.organisation_name,
+                        email: req.body.email,
+                        payment_status: "Pending",
+                        payment_url: response.payment_request.longurl
+                    }, (err, result) => {
+                        if (err) throw err;
+                    });
+                    res.send(JSON.stringify({
+                        redirect_url: response.payment_request.longurl,
+                        error: 0
+                    }));
+                } else {
+                    res.status(400).write("Invalid Data");
+                    res.end();
+                    console.log(response);
+                }
             }
         })
+
     });
 
 app.post('/payment_webhook', (req, res) => {
@@ -194,7 +200,24 @@ app.post('/verify_payment', (req, res) => {
         res.status(400).write("Invalid Data");
         res.end();
     }
-})
+});
+
+app.get('/login', (req, res) => {
+    const db = req.app.locals.db,
+        teamsList = db.collection('teamsList');
+    if (req.headers.login_name == "dota2lan" && req.headers.password == "dota2lancomp") {
+        teamsList.find({}).toArray((err, data) => {
+            if (err) throw err;
+            res.send({
+                error: 0,
+                data: data
+            })
+        })
+    } else {
+        res.status(400).write('Bad Login');
+        res.end();
+    }
+});
 app.listen(PORT, (err) => {
     if (err) throw err;
     process.stdout.write(`Server Started on ${PORT}
