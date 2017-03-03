@@ -31,8 +31,8 @@ app.get('/payment_status', (req, res) => {
 app.get('/register_log', (req, res) => {
     res.sendFile(path.resolve(process.cwd(), './dist/registrations.html'));
 });
-// Disable X-Powered-By header from requests
 app.disable('x-powered-by');
+// Disable X-Powered-By header from requests
 
 // Receive and create a Request URI
 app.post('/get_request_uri',
@@ -70,9 +70,11 @@ app.post('/get_request_uri',
         const db = req.app.locals.db,
             teamsList = db.collection('teamsList');
         let data = new Insta.PaymentData();
+
+        let team_name = req.body.team_name.split(" ").join("-");
         data.purpose = "DOTA 2 LAN Gaming Competition"
         data.amount = 513;
-        data.buyer_name = req.body.team_name;
+        data.buyer_name = team_name;
         data.email = req.body.email;
         data.phone = req.body.contact_required;
         data.send_sms = 'False';
@@ -88,7 +90,7 @@ app.post('/get_request_uri',
                     teamsList.insertOne({
                         required_contact: req.body.contact_required,
                         optional_contact: req.body.contact_optional,
-                        team_name: req.body.team_name,
+                        team_name: team_name,
                         captain_name: req.body.team_captain,
                         players: {
                             1: {
