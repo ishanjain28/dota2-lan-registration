@@ -42,6 +42,36 @@
 
         <div class="form-row">
             <label>
+                    <span>Player #1</span>
+                    <input type="text" name="player_one" id="player_one" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #2</span>
+                    <input type="text" name="player_two" id="player_two" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #3</span>
+                    <input type="text" name="player_three" id="player_three" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #4</span>
+                    <input type="text" name="player_four" id="player_four" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
+                    <span>Player #5</span>
+                    <input type="text" name="player_five" id="player_five" required>
+            </label>
+        </div>
+        <div class="form-row">
+            <label>
                     <span>College or Organisation Name</span>
                     <input type="text" name="organisation_name" id="organisation_name" required/>
                 </label>
@@ -79,6 +109,11 @@
             url = "/get_request_uri";
         var team_name = document.getElementById('team_name').value,
             team_captain = document.getElementById('team_captain_name').value,
+            player_one = document.getElementById('player_one').value,
+            player_two = document.getElementById('player_two').value,
+            player_three = document.getElementById('player_three').value,
+            player_four = document.getElementById('player_four').value,
+            player_five = document.getElementById('player_five').value,
             email = document.getElementById('email').value,
             organisation_name = document.getElementById('organisation_name').value,
             contact_required = document.getElementById('contact_required').value,
@@ -87,6 +122,11 @@
         var data =
             "team_name=" + team_name +
             "&team_captain=" + team_captain +
+            "&player_one=" + player_one +
+            "&player_two=" + player_two +
+            "&player_three=" + player_three +
+            "&player_four=" + player_four +
+            "&player_five=" + player_five +
             "&email=" + email +
             "&organisation_name=" + organisation_name +
             "&contact_optional=" + contact_optional +

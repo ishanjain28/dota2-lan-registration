@@ -38,6 +38,11 @@ app.post('/get_request_uri',
         if (req.body &&
             req.body.team_name &&
             req.body.team_captain &&
+            req.body.player_one &&
+            req.body.player_two &&
+            req.body.player_three &&
+            req.body.player_four &&
+            req.body.player_five &&
             req.body.email &&
             req.body.organisation_name &&
             req.body.contact_required) {
@@ -71,7 +76,12 @@ app.post('/get_request_uri',
                     optional_contact: req.body.contact_optional,
                     team_name: req.body.team_name,
                     captain_name: req.body.team_captain,
-                    orgranisation_name: req.body.organisation_name,
+                    player_one: req.body.player_one,
+                    player_two: req.body.player_two,
+                    player_three: req.body.player_three,
+                    player_four: req.body.player_four,
+                    player_five: req.body.player_five,
+                    organisation_name: req.body.organisation_name,
                     email: req.body.email,
                     payment_status: "Pending",
                     payment_url: response.payment_request.longurl
