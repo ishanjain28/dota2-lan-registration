@@ -117,78 +117,62 @@
 
         var table = document.createElement('table'),
             mainContent = document.getElementById('main-content'),
-            thead = document.createElement('thead'),
-            tbody = document.createElement('tbody'),
+            thead = "",
+            tbody = "",
             headers = ['S. No.', 'College Name', 'Team Name', 'Captain Name', 'Players', 'Contact #1', 'Contact #2', 'E-Mail', 'Payment Status'];
 
         // Create Table Headers
         headers.forEach(function(value) {
-            var td = document.createElement('td');
-            td.innerText = value;
-            thead.appendChild(td);
+            thead += "<td>" + value + "</td>";
         });
 
-        // Append Header 
-        table.appendChild(thead);
         // Create Rows
         data.forEach(function(record, index, array) {
-            /*
-             * Have to do this the dumb way, It can other wise lead to inconsistent data in columns
-             */
-            var tr = document.createElement('tr'),
-                sno = document.createElement('td'),
-                teamName = document.createElement('td'),
-                captainName = document.createElement('td'),
-                collegeName = document.createElement('td'),
-                contact1 = document.createElement('td'),
-                contact2 = document.createElement('td'),
-                email = document.createElement('td'),
-                paymentStatus = document.createElement('td'),
-                playersList = document.createElement('ul'),
+            var email = "<td><a href='mailto:" + record.email + "'>" + record.email + "</a></td>",
+                paymentStatus = "<td>" + record.payment_status + "</td>",
+                sno = "<td>" + (index + 1) + "</td>",
+                teamName = "<td>" + record.team_name + "</td>",
+                captainName = "<td>" + record.captain_name + "</td>",
+                collegeName = "<td>" + record.organisation_name + "</td>",
+                contactRequired = "<td>" + record.required_contact + "</td>",
+                contactOptional = "<td>" + record.optional_contact + "</td>",
+                playersList = "<td>" + createPlayersList(record.players) + "</td>",
                 players = record.players;
 
-            // Set Values of different columns for a record
-            sno.innerText = index + 1;
-            teamName.innerText = record.team_name;
-            captainName.innerText = record.captain_name;
-            collegeName.innerText = record.organisation_name;
-            contact1.innerText = record.required_contact;
-            contact2.innerText = record.optional_contact;
-            email.innerText = record.email;
-            paymentStatus.innerText = record.payment_status;
-            var count = 1;
-            for (var player in players) {
-                if (players.hasOwnProperty(player)) {
-                    var li = document.createElement('li'),
-                        name = players[player].name,
-                        link = players[player].link;
-                    if (player == 6 || player == 7) {
-                        li.innerHTML = "<a href=" + link + '">Optional #' + (count - 5) + " " + name + "</a>";
-                    } else {
-                        li.innerHTML = "<a href=" + link + '>#' + (count) + " " + name + "</a>";
-                    }
-                    playersList.appendChild(li);
-                }
-                count++;
-            }
-
-            // Append Nodes to tbody
-            // To change the sequence of columns change it here and then in headers array
-            tr.appendChild(sno);
-            tr.appendChild(collegeName);
-            tr.appendChild(teamName);
-            tr.appendChild(captainName);
-            tr.appendChild(playersList);
-            tr.appendChild(contact1);
-            tr.appendChild(contact2);
-            tr.appendChild(email);
-            tr.appendChild(paymentStatus);
-            tbody.appendChild(tr);
-
-            table.appendChild(tbody);
-
-            mainContent.appendChild(table);
+            tbody +=
+                "<tr>" +
+                sno +
+                teamName +
+                captainName +
+                collegeName +
+                playersList +
+                contactRequired +
+                contactOptional +
+                email +
+                paymentStatus +
+                "</td>";
         });
+        table.innerHTML = thead + tbody;
+
+        mainContent.appendChild(table);
+    }
+
+    function createPlayersList(players) {
+        var count = 1;
+        var ul = "<ul>";
+        for (var player in players) {
+            var name = players[player].name,
+                link = players[player].link;
+            if (player == 6 || player == 7) {
+                ul += "<li><a href=" + link + '">Optional #' + (count - 5) + " " + name + "</a></li>";
+            } else {
+                ul += "<li><a href=" + link + '>#' + (count) + " " + name + "</a></li>";
+
+            }
+            count++;
+        }
+        ul += "</ul>"
+        return ul;
     }
 </script>
 </body>
