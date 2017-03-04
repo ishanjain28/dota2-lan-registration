@@ -51,10 +51,10 @@ app.post('/get_request_uri',
             req.body.player_four_link &&
             req.body.player_five &&
             req.body.player_five_link &&
-            req.body.optional_player_one &&
-            req.body.optional_player_one_link &&
-            req.body.optional_player_two &&
-            req.body.optional_player_two_link &&
+            // req.body.optional_player_one &&
+            // req.body.optional_player_one_link &&
+            // req.body.optional_player_two &&
+            // req.body.optional_player_two_link &&
             req.body.email &&
             req.body.organisation_name &&
             req.body.contact_required) {
