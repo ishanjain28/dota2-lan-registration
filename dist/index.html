@@ -109,7 +109,7 @@
         <div class="form-row">
             <label>
                     <span>Optional Player #1 Steam ID</span>
-                    <input type="text" name="optional_player_one_link" id="optional_player_one_link" value="https://steamcommunity.com/id/">
+                    <input type="text" name="optional_player_one_link" id="optional_player_one_link">
             </label>
         </div>
         <div class="form-row">
@@ -121,7 +121,7 @@
         <div class="form-row">
             <label>
                     <span>Optional Player #2 Steam ID</span>
-                    <input type="text" name="optional_player_two_link" id="optional_player_two_link" value="https://steamcommunity.com/id/">
+                    <input type="text" name="optional_player_two_link" id="optional_player_two_link">
             </label>
         </div>
         <div class="form-row">
@@ -148,8 +148,8 @@
     </form>
 </div>
 <script type="text/javascript">
-    window.onload = function () {
-        document.getElementById('form-basic').addEventListener('submit', function (event) {
+    window.onload = function() {
+        document.getElementById('form-basic').addEventListener('submit', function(event) {
             event.preventDefault();
             var submitButton = document.getElementById('submit-button');
             submitButton.disabled = true;
@@ -205,7 +205,7 @@
             "&contact_required=" + contact_required;
         http.open("POST", url, true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.onreadystatechange = function () {
+        http.onreadystatechange = function() {
             if (http.readyState == 4 && http.status == 200) {
                 var response = JSON.parse(http.responseText);
                 if (!response.error) {
