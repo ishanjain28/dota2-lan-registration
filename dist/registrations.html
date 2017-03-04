@@ -164,9 +164,9 @@
             var name = players[player].name,
                 link = players[player].link;
             if (player == 6 || player == 7) {
-                ul += "<li><a href=" + link + '>Optional #' + (count - 5) + " " + name + "</a></li>";
+                ul += "<li><a href=" + link + '>Optional ' + (count - 5) + ". " + name + "</a></li>";
             } else {
-                ul += "<li><a href=" + link + '>#' + (count) + " " + name + "</a></li>";
+                ul += "<li><a href=" + link + '>' + (count) + ". " + name + "</a></li>";
 
             }
             count++;

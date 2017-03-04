@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
@@ -17,7 +17,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 // Set Instamojo keys
 Insta.setKeys(process.env.INSTA_API_KEY, process.env.INSTA_AUTH_KEY);
 // Dev Mode
-Insta.isSandboxMode(true);
+// Insta.isSandboxMode(true);
 // Enable Body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 // Serve static Files
