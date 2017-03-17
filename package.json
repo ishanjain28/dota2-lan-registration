@@ -23,11 +23,8 @@
     "homepage": "https://github.com/ishanjain28/dota2-manthan#readme",
     "dependencies": {
         "body-parser": "^1.16.1",
-        "dotenv": "^4.0.0",
-        "eslint": "^3.16.1",
         "express": "^4.14.1",
         "instamojo-nodejs": "^0.0.5",
-        "mongodb": "^2.2.24",
-        "request": "^2.79.0"
+        "mongodb": "^2.2.24"
     }
 }
